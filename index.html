@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Foundations Summer Camp - 2-Week ML Intensive for Middle Schoolers</title>
+<meta name="description" content="A 2-week summer camp where middle schoolers train and ship their first AI models. Taught by Yookta Pandit, ISEF 2026 Grand Award winner.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c1322;
+    --ink-2:#2c3344;
+    --ink-3:#4a5266;
+    --muted:#6b7385;
+    --line:#e5e3da;
+    --line-2:#ecead8;
+    --paper:#f6f1e6;
+    --paper-2:#fbf7ec;
+    --card:#ffffff;
+    --accent:#0e3a8a;
+    --accent-2:#0b6e5a;
+    --gold:#a87a00;
+    --gold-bg:#f4e7bf;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    color:#e3e8f3;
+    background:
+      radial-gradient(ellipse at 20% 0%,#1f3873 0%,transparent 50%),
+      radial-gradient(ellipse at 90% 100%,#0a5b4a 0%,transparent 50%),
+      linear-gradient(180deg,#0a1428 0%,#08111f 100%);
+    background-attachment:fixed;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:#f5c842;color:#0a1428}
+  a{color:#f5c842;text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.018em;color:#fff;margin:0}
+  h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1.02;font-weight:700}
+  h2{font-size:clamp(1.9rem,3vw,2.7rem);line-height:1.1}
+  h3{font-size:1.35rem;line-height:1.25}
+  h4{font-size:1.05rem;line-height:1.3}
+  p{margin:0 0 1rem;color:#b0bbd0}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 1.75rem}
+
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+    background-image:radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:3px 3px;opacity:.5;
+  }
+
+  /* === NAV === */
+  header.site{
+    position:sticky;top:0;z-index:30;
+    backdrop-filter:saturate(180%) blur(10px);
+    background:rgba(10,17,31,.82);
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  header.site .row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 0;
+  }
+  .brand{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:1.18rem;letter-spacing:-.01em;display:flex;align-items:center;gap:.6rem;color:#fff}
+  .brand .mark{
+    width:1.7rem;height:1.7rem;border-radius:50%;
+    background:linear-gradient(135deg,#f5c842 0%,#e89e1c 100%);
+    display:flex;align-items:center;justify-content:center;color:#0a1428;
+    font-size:.7rem;font-weight:700;font-family:"Inter",sans-serif;letter-spacing:.04em;
+  }
+  .brand small{font-family:"Inter",sans-serif;font-weight:500;font-size:.78rem;color:#7d8aab;letter-spacing:.04em;margin-left:.2rem}
+  nav a{
+    color:#cfd6e8;font-weight:500;font-size:.92rem;margin-left:1.6rem;
+    position:relative;padding-bottom:.4rem;
+  }
+  nav a:hover{color:#f5c842;text-decoration:none}
+  nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:#f5c842;transform:scaleX(0);transform-origin:left;
+    transition:transform .25s ease;border-radius:2px;
+  }
+  nav a:hover::after{transform:scaleX(1)}
+  nav a.active{color:#f5c842}
+  nav a.active::after{transform:scaleX(1)}
+  @media(max-width:720px){nav a{margin-left:.95rem;font-size:.84rem}}
+  @media(max-width:480px){nav a{margin-left:.7rem;font-size:.78rem}}
+
+  /* === TABS === */
+  .tab-panel{display:none;animation:fadeIn .35s ease}
+  .tab-panel.active{display:block}
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* === SECTION SHELL === */
+  section{padding:5.5rem 0;position:relative}
+  .section-head{margin-bottom:3rem;max-width:48rem}
+  .kicker{
+    font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+    color:#7d8aab;font-weight:700;margin-bottom:1rem;
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .kicker::before{content:"";display:block;width:1.8rem;height:1px;background:currentColor}
+
+  /* === HERO (Instructor tab) === */
+  .hero{padding:2rem 0 4rem;position:relative;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;right:-10rem;top:-10rem;width:30rem;height:30rem;
+    background:radial-gradient(circle,rgba(245,200,66,.55) 0%,transparent 65%);opacity:.32;z-index:0;
+  }
+  .hero::after{
+    content:"";position:absolute;left:-15rem;bottom:-15rem;width:35rem;height:35rem;
+    background:radial-gradient(circle,rgba(11,110,90,.6) 0%,transparent 65%);opacity:.55;z-index:0;
+  }
+  .hero .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:4rem;align-items:start;position:relative;z-index:1}
+  @media(max-width:880px){.hero .grid{grid-template-columns:1fr;gap:2.5rem}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+    color:#f5c842;font-weight:700;margin-bottom:1.4rem;
+  }
+  .lede{font-size:1.22rem;color:#cfd6e8;line-height:1.6;margin-top:0}
+  @media(max-width:880px){.lede{margin-top:1.6rem}}
+  .lede b{color:#fff;font-weight:600}
+  .lede a{color:#f5c842}
+  .hero h1 em{font-style:italic;font-weight:400;color:#f5c842;position:relative;display:inline-block}
+  .hero h1 em::after{
+    content:"";position:absolute;left:0;right:0;bottom:.05em;height:.18em;
+    background:rgba(245,200,66,.22);z-index:-1;
+  }
+  .hero-tags{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:2rem}
+  .tag{
+    display:inline-flex;align-items:center;gap:.4rem;
+    font-size:.82rem;font-weight:600;color:#fff;
+    border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
+    padding:.45rem .8rem;border-radius:999px;
+  }
+  .tag.gold{border-color:rgba(245,200,66,.4);background:rgba(245,200,66,.16);color:#f5c842}
+  .tag.green{border-color:rgba(123,224,181,.35);background:rgba(123,224,181,.12);color:#7be0b5}
+  .tag.blue{border-color:rgba(155,184,255,.35);background:rgba(155,184,255,.12);color:#9bb8ff}
+  .tag .ico{font-size:.9rem;line-height:1}
+
+  .hero-media{position:relative;aspect-ratio:4/5;perspective:1200px;width:75%;margin-left:auto}
+  @media(max-width:880px){.hero-media{margin:0 auto}}
+  .photo{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 6px 12px -4px rgba(0,0,0,.3);
+    overflow:hidden;position:relative;
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo .label{
+    position:absolute;left:0;right:0;bottom:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.55),transparent);
+    color:#fff;padding:.9rem 1rem .8rem;font-size:.78rem;letter-spacing:.05em;
+    text-transform:uppercase;font-weight:600;
+  }
+  .hero-media .main{position:absolute;inset:0;transform:rotate(-2deg)}
+  .hero-media .stamp{
+    position:absolute;right:-1.2rem;top:-1.2rem;
+    width:5.2rem;height:5.2rem;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,#ffe289,#c9930b);
+    border:3px solid #fff8d8;
+    box-shadow:0 8px 20px -6px rgba(150,100,0,.45);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:#3a2a00;font-family:"Fraunces",serif;font-weight:700;font-size:.72rem;line-height:1.05;
+    transform:rotate(8deg);
+  }
+
+  /* === HOME (camp landing) === */
+  #home{padding:5rem 0 6rem;border-bottom:none}
+  #home h2 em,#home h1 em{color:#f5c842;font-style:italic;font-weight:600}
+  #home .home-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center;margin-bottom:4rem}
+  @media(max-width:880px){#home .home-hero{grid-template-columns:1fr;gap:2.2rem}}
+  #home .home-hero h1{font-size:clamp(2.4rem,5.2vw,4.4rem);line-height:1.04}
+  #home .home-hero .lede-dark{font-size:1.18rem;color:#cfd6e8;line-height:1.6;margin-top:1.4rem;max-width:38rem}
+  #home .home-hero .lede-dark b{color:#fff}
+  #home .home-tags{margin-top:2rem}
+  #home .home-tags .tag{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;
+  }
+  #home .home-tags .tag.accent{background:rgba(245,200,66,.16);border-color:rgba(245,200,66,.4);color:#f5c842}
+  #home .hero-side{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;padding:1.8rem;
+  }
+  #home .hero-side h4{color:#f5c842;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.2rem;font-family:"Inter",sans-serif;font-weight:700}
+  #home .hero-side dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.9rem 1.2rem}
+  #home .hero-side dt{color:#7d8aab;font-size:.86rem;font-weight:500}
+  #home .hero-side dd{margin:0;color:#fff;font-weight:500;font-size:.93rem}
+
+  .why{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1rem}
+  @media(max-width:760px){.why{grid-template-columns:1fr}}
+  .why .item{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;padding:1.4rem 1.3rem;
+  }
+  .why h4{font-size:1.02rem;margin-bottom:.5rem;color:#fff}
+  .why p{margin:0;font-size:.92rem;color:#b0bbd0;line-height:1.55}
+  .why .ic{
+    width:2.2rem;height:2.2rem;border-radius:8px;
+    background:linear-gradient(135deg,#f5c842 0%,#e89e1c 100%);
+    color:#1a1a1a;display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",serif;font-weight:700;margin-bottom:.9rem;font-size:1rem;
+  }
+  .why .item:nth-child(2) .ic{background:linear-gradient(135deg,#7be0b5 0%,#3aa078 100%)}
+  .why .item:nth-child(3) .ic{background:linear-gradient(135deg,#9bb8ff 0%,#5775d4 100%)}
+
+  .curriculum{margin-top:2.4rem}
+  .curriculum h3{margin-bottom:1.2rem;font-size:1.3rem}
+  .curriculum .week-head{
+    font-family:"Inter",sans-serif;font-weight:700;
+    font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    color:#f5c842;margin:1.6rem 0 .6rem;
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .curriculum .week-head:first-child{margin-top:0}
+  .curriculum .week-head::before{content:"";display:block;width:1.6rem;height:1px;background:currentColor}
+  .curriculum .day{
+    display:grid;grid-template-columns:auto 1fr;gap:1.4rem;
+    padding:1rem 0;border-top:1px solid rgba(255,255,255,.1);align-items:start;
+  }
+  .curriculum .day:first-of-type{border-top:none}
+  .curriculum .num{
+    font-family:"Fraunces",serif;font-weight:700;font-size:1.4rem;color:#f5c842;
+    min-width:3.5rem;letter-spacing:.02em;
+  }
+  .curriculum .body b{color:#fff;display:block;margin-bottom:.2rem;font-family:"Fraunces",serif;font-weight:600;font-size:1.05rem}
+  .curriculum .body span{color:#a4afca;font-size:.93rem;line-height:1.55}
+
+  .home-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3.5rem;align-items:start;margin-top:3rem}
+  @media(max-width:880px){.home-grid{grid-template-columns:1fr;gap:2.5rem}}
+
+  .cta{
+    display:inline-flex;align-items:center;gap:.6rem;margin-top:2.2rem;
+    background:#f5c842;color:#1a1a1a;padding:1rem 1.6rem;border-radius:10px;
+    font-weight:700;font-size:.95rem;letter-spacing:.02em;
+    box-shadow:0 10px 30px -8px rgba(245,200,66,.45);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover{transform:translateY(-2px);box-shadow:0 14px 36px -8px rgba(245,200,66,.6);text-decoration:none}
+  .cta-row{display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center}
+  .cta-secondary{
+    color:#fff;font-weight:500;font-size:.92rem;border-bottom:1px solid rgba(255,255,255,.3);
+    padding-bottom:.2rem;
+  }
+  .cta-secondary:hover{border-color:#fff;text-decoration:none}
+
+  /* Sessions & tuition */
+  .sessions-block{margin-top:4rem}
+  .sessions-block h3{margin-bottom:1.4rem}
+  .session-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+  @media(max-width:760px){.session-grid{grid-template-columns:1fr}}
+  .session-card{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;padding:1.4rem 1.5rem;
+  }
+  .session-card .num{
+    font-family:"Inter",sans-serif;font-weight:700;
+    font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    color:#f5c842;margin-bottom:.7rem;
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .session-card .num::before{content:"";display:block;width:1.6rem;height:1px;background:currentColor}
+  .session-card .dates{font-family:"Fraunces",serif;font-weight:600;font-size:1.3rem;color:#fff;line-height:1.2;margin-bottom:.3rem}
+  .session-card .time{color:#e3e8f3;font-size:1rem;font-weight:500;margin-bottom:.45rem}
+  .session-card .meta{color:#8a93ab;font-size:.86rem}
+  .tuition-row{
+    margin-top:1.1rem;padding:1.3rem 1.5rem;
+    background:linear-gradient(135deg,rgba(245,200,66,.14) 0%,rgba(245,200,66,.04) 100%);
+    border:1px solid rgba(245,200,66,.32);border-radius:12px;
+    display:flex;align-items:baseline;justify-content:space-between;gap:1.2rem;flex-wrap:wrap;
+  }
+  .tuition-row .label{
+    font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    color:#f5c842;font-weight:700;
+  }
+  .tuition-row .amount{
+    font-family:"Fraunces",serif;font-weight:700;font-size:1.9rem;color:#fff;line-height:1;
+  }
+  .tuition-row .detail{color:#cfd6e8;font-size:.92rem}
+
+  .curriculum .week-summary{
+    color:#cfd6e8;font-size:1.02rem;line-height:1.7;margin:.4rem 0 1.8rem;
+  }
+
+  /* Instructor blurb at bottom of home */
+  .instructor-blurb{
+    margin-top:5rem;padding-top:3rem;border-top:1px solid rgba(255,255,255,.1);
+    display:grid;grid-template-columns:auto 1fr auto;gap:1.6rem;align-items:center;
+  }
+  @media(max-width:760px){.instructor-blurb{grid-template-columns:1fr;text-align:left}}
+  .instructor-blurb .avatar{
+    width:5rem;height:5rem;border-radius:50%;overflow:hidden;
+    border:2px solid rgba(255,255,255,.15);flex-shrink:0;
+  }
+  .instructor-blurb .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .instructor-blurb .who{color:#f5c842;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:.3rem}
+  .instructor-blurb .name{font-family:"Fraunces",serif;font-weight:600;font-size:1.15rem;color:#fff;margin-bottom:.3rem}
+  .instructor-blurb p{margin:0;font-size:.94rem;color:#b0bbd0}
+  .instructor-blurb .arrow{
+    color:#fff;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:.45rem;
+    border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:.2rem;
+  }
+
+  /* === COMPETITIONS === */
+  #competitions{background:transparent}
+  #competitions h2 em{color:#f5c842;font-style:italic;font-weight:600}
+  .comp-intro{font-size:1.12rem;color:#cfd6e8;max-width:46rem;line-height:1.6}
+  .comp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:3rem}
+  @media(max-width:760px){.comp-grid{grid-template-columns:1fr}}
+  .comp-card{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;
+    padding:1.8rem;display:flex;flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .comp-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -16px rgba(0,0,0,.55);border-color:rgba(255,255,255,.18)}
+  .comp-card .tier{
+    display:inline-block;font-size:.7rem;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;
+    padding:.3rem .7rem;border-radius:999px;
+    margin-bottom:.9rem;align-self:flex-start;
+  }
+  .comp-card .tier.intl{background:rgba(245,200,66,.16);color:#f5c842;border:1px solid rgba(245,200,66,.4)}
+  .comp-card .tier.natl{background:rgba(155,184,255,.14);color:#9bb8ff;border:1px solid rgba(155,184,255,.35)}
+  .comp-card .tier.state{background:rgba(123,224,181,.14);color:#7be0b5;border:1px solid rgba(123,224,181,.35)}
+  .comp-card .tier.regional{background:rgba(255,255,255,.08);color:#cfd6e8;border:1px solid rgba(255,255,255,.18)}
+  .comp-card .tier.national{background:rgba(232,158,28,.14);color:#e89e1c;border:1px solid rgba(232,158,28,.4)}
+  .comp-card h3{font-size:1.3rem;margin-bottom:.5rem;line-height:1.25;color:#fff}
+  .comp-card .what{color:#b0bbd0;font-size:.95rem;line-height:1.55;margin-bottom:1rem}
+  .comp-card .meta{
+    display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;
+    font-size:.85rem;margin:0 0 1rem;
+    padding:.9rem 1.1rem;background:rgba(255,255,255,.04);border-radius:8px;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .comp-card .meta dt{color:#7d8aab;font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+  .comp-card .meta dd{margin:0;color:#e3e8f3;font-weight:500;font-size:.88rem}
+  .comp-card .prep{color:#b0bbd0;font-size:.92rem;line-height:1.55;margin-bottom:1.1rem}
+  .comp-card .prep b{color:#fff}
+  .comp-card .yookta{
+    margin-top:auto;padding:.9rem 1.1rem;
+    background:linear-gradient(135deg,rgba(245,200,66,.14) 0%,rgba(245,200,66,.04) 100%);
+    border-left:3px solid #f5c842;border-radius:0 8px 8px 0;
+    font-size:.9rem;color:#e3e8f3;line-height:1.5;
+  }
+  .comp-card .yookta b{color:#fff}
+  .comp-card .yookta::before{content:"★ ";color:#f5c842;font-weight:700}
+
+  /* === RESEARCH (Instructor sub-section, dark) === */
+  #research{background:#1a1d28;color:#e3e6ee;border-bottom:none}
+  #research h1,#research h2,#research h3,#research h4{color:#fff}
+  #research p{color:#b9bfce}
+  #research .kicker{color:#8a93ab}
+  #research .section-head h2 em{font-style:italic;color:#f5d56a}
+
+  .project{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;
+    padding:3.5rem 0;border-top:1px solid #2d3140;align-items:center;
+  }
+  .project:first-of-type{border-top:none;padding-top:1rem}
+  @media(max-width:880px){.project{grid-template-columns:1fr;gap:2rem;padding:3rem 0}}
+  .project.reverse .copy{order:2}
+  .project.reverse .visual{order:1}
+  @media(max-width:880px){.project.reverse .copy,.project.reverse .visual{order:initial}}
+  .project header{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-bottom:1rem}
+  .project .where{font-size:.86rem;color:#8a93ab}
+  .project .pill{
+    font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:#1a1d28;background:#f5d56a;padding:.32rem .7rem;border-radius:999px;
+  }
+  .project .pill.green{background:#7be0b5;color:#08382a}
+  .project h3{font-size:1.85rem;margin-bottom:1rem;line-height:1.18}
+  .project .summary{color:#cfd4e2;font-size:1.02rem;line-height:1.7}
+  .project .summary b{color:#fff}
+  .project .results{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.6rem}
+  @media(max-width:520px){.project .results{grid-template-columns:1fr}}
+  .result{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+    border-radius:10px;padding:.9rem 1rem;
+  }
+  .result .v{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:1.5rem;color:#fff;line-height:1.1}
+  .result .l{font-size:.78rem;color:#9aa3bb;margin-top:.25rem;line-height:1.35}
+  .result.gold{border-color:rgba(245,213,106,.4);background:rgba(245,213,106,.08)}
+  .result.gold .v{color:#f5d56a}
+
+  .board{
+    background:#fff;border-radius:10px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 6px 12px -4px rgba(0,0,0,.3);
+    aspect-ratio:4/3;position:relative;overflow:hidden;
+    transform:rotate(-1.2deg);transition:transform .3s ease;
+  }
+  .project.reverse .board{transform:rotate(1.2deg)}
+  .board:hover{transform:rotate(0)}
+  .board img{width:100%;height:100%;object-fit:cover;display:block}
+  .board .caption{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.45),transparent);
+    color:#fff;padding:.9rem 1rem .8rem;font-size:.74rem;
+    letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    opacity:0;transition:opacity .25s ease;
+  }
+  .board:hover .caption{opacity:1}
+
+  /* === HONORS === */
+  #honors{background:transparent}
+  .honors-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem}
+  @media(max-width:760px){.honors-grid{grid-template-columns:1fr}}
+  .honor{
+    display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;
+    padding:1.2rem 0;border-top:1px solid rgba(255,255,255,.1);
+  }
+  .honor .badge{
+    width:3rem;height:3rem;border-radius:50%;
+    background:rgba(245,200,66,.14);border:1px solid rgba(245,200,66,.4);color:#f5c842;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:1rem;flex-shrink:0;
+  }
+  .honor .badge.silver{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#cfd6e8}
+  .honor .badge.bronze{background:rgba(232,158,28,.14);border-color:rgba(232,158,28,.4);color:#e89e1c}
+  .honor .name{font-weight:600;color:#fff;margin-bottom:.15rem;font-size:1rem}
+  .honor .meta{font-size:.84rem;color:#7d8aab;line-height:1.4}
+  .honor .year{font-family:"Fraunces",serif;color:#f5c842;font-weight:600;font-size:.95rem}
+
+  /* === FOOTER === */
+  footer{padding:3rem 0 4rem;color:#7d8aab;font-size:.9rem;background:transparent;border-top:1px solid rgba(255,255,255,.1)}
+  footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1.4rem;align-items:center}
+  footer a{color:#cfd6e8;font-weight:500}
+
+  blockquote{
+    margin:2rem 0 0;padding:1rem 0 1rem 2rem;
+    border-left:3px solid #f5d56a;
+    font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:1.25rem;
+    color:#fff;line-height:1.45;
+  }
+  blockquote cite{display:block;margin-top:.6rem;font-style:normal;font-size:.85rem;color:#8a93ab;font-family:"Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container row">
+    <div class="brand"><span class="mark">AI</span> AI Foundations <small>· Summer Camp</small></div>
+    <nav>
+      <a href="#home" data-tab-link="home">Home</a>
+      <a href="#competitions" data-tab-link="competitions">Competitions</a>
+      <a href="#instructor" data-tab-link="instructor">Instructor</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============== HOME (Camp landing page) ============== -->
+<section id="home" class="tab-panel" data-tab="home">
+  <div class="container">
+
+    <div class="home-hero">
+      <div>
+        <div class="kicker">Summer 2026 · Grades 6-8</div>
+        <h1>A 2-week summer camp for middle schoolers to <em>learn AI</em>.</h1>
+        <p class="lede-dark">
+          In <b>AI Foundations</b>, across two weeks, students will go from zero to 
+          building, training, and evaluating their own machine-learning model on real
+          data - the same process used by award-winning student researchers at the 
+          International Science and Engineering Fair and the Thermo Fisher Junior 
+          Innovators Challenge. Sign up below!
+        </p>
+        <div class="hero-tags home-tags">
+          <span class="tag accent">2-week intensive</span>
+          <span class="tag">Grades 6-8</span>
+          <span class="tag">6 students per session</span>
+        </div>
+        <div class="cta-row">
+          <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLScCdKG0CbLirp6tCIcsz4OiUglhAWu1BLE5h_90dHH_i-jZzQ/viewform?usp=publish-editor" target="_blank" rel="noopener">
+            Register here &nbsp;→
+          </a>
+          <a class="cta-secondary" href="#instructor">Meet your instructor</a>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <h4>At a glance</h4>
+        <dl>
+          <dt>Dates</dt><dd>Jul 20 – 31, 2026 · Mon–Fri</dd>
+          <dt>Session options</dt><dd>9–11am or 2–4pm PT</dd>
+          <dt>Tuition</dt><dd>$150 for the 2-week program</dd>
+          <dt>Format</dt><dd>Online · weekdays</dd>
+          <dt>Grades</dt><dd>6–8</dd>
+          <dt>Class size</dt><dd>12 students (6 per session)</dd>
+          <dt>Prereqs</dt><dd>None - curiosity required!</dd>
+          <dt>Required for class</dt><dd>Computer, Zoom, Google account</dd>
+          <dt>Outcome</dt><dd>Python for AI skills · one trained model · one science fair-style showcase</dd>
+          <dt>Instructor</dt><dd>Yookta Pandit - ISEF '26 Grand Award Winner</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="why">
+      <div class="item">
+        <div class="ic">★</div>
+        <h4>Taught by someone who's done it</h4>
+        <p>3rd in the world at ISEF 2026 and Top 30 at the Thermo Fisher JIC - using the machine learning techniques students will learn in camp.</p>
+      </div>
+      <div class="item">
+        <div class="ic">●</div>
+        <h4>A year of teaching middle schoolers</h4>
+        <p>Yookta has run the AI Explorers club at Quarry Lane School for the past year. The camp's curriculum is based on this experience.</p>
+      </div>
+      <div class="item">
+        <div class="ic">▲</div>
+        <h4>Real projects</h4>
+        <p>By the end of the two weeks every camper trains a model on a real dataset and presents their results, for a full mini science-fair experience.</p>
+      </div>
+    </div>
+
+    <div class="sessions-block">
+      <h3>Sessions</h3>
+      <div class="session-grid">
+        <div class="session-card">
+          <div class="num">Session 1</div>
+          <div class="dates">Jul 20 – Jul 31, 2026</div>
+          <div class="time">9:00 – 11:00 AM PT</div>
+          <div class="meta">Mon – Fri · Online · 6 spots</div>
+        </div>
+        <div class="session-card">
+          <div class="num">Session 2</div>
+          <div class="dates">Jul 20 – Jul 31, 2026</div>
+          <div class="time">2:00 – 4:00 PM PT</div>
+          <div class="meta">Mon – Fri · Online · 6 spots</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="curriculum">
+      <h3 style="margin-top:3rem">The 2-week curriculum</h3>
+      <div class="week-head">Week 1 · Foundations</div>
+      <p class="week-summary">Students start with learning the basics of Python and Python related to AI, 
+        such as NumPy and Pandas libraries to process data. Then, students will be introduced to different 
+        types of machine learning models and tasks they can perform, as well as the difference between machine 
+        learning and deep learning. The week wraps with students picking out a real-world question and a dataset
+        they can use to train an AI model to answer this question.</p>
+
+      <div class="week-head">Week 2 · Build &amp; Showcase</div>
+      <p class="week-summary">In week two, each camper uses the real-world question and dataset they found, 
+        then builds, trains, and debugs their own classifier with mentor support. They compare model 
+        architectures, tune features, and watch their accuracy climb between trials. The final two days 
+        are spent preparing a science fair-style presentation, with background, methods, and results, 
+        and presenting the project to their peers on the last day.</p>
+    </div>
+
+    <div class="instructor-blurb">
+      <div class="avatar"><img src="images/yookta-portrait.jpg" alt="Yookta Pandit"></div>
+      <div>
+        <div class="who">Your instructor</div>
+        <div class="name">Yookta Pandit</div>
+        <p>ISEF 2026 Grand Award winner · Thermo Fisher JIC Top 30 Finalist · Year-long instructor of the Quarry Lane AI Explorers Club.</p>
+      </div>
+      <a class="arrow" href="#instructor">Read full bio →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== COMPETITIONS ============== -->
+<section id="competitions" class="tab-panel" data-tab="competitions">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">After camp · Where to go next</div>
+      <h2>Competitions your camper can enter - and how camp prepares them.</h2>
+      <p class="comp-intro">
+        AI Foundations helps prepare the skills middle schoolers need 
+        (data thinking, model training, evaluation, project presentation) to directly start competing for
+        biggest pre-college STEM competitions in the country. We will go through the full research process, 
+        starting with developing an idea, then building a model, rigorously testing it, and presenting on 
+        the last day. Here are some competitions structured this way:
+      </p>
+    </div>
+
+    <div class="comp-grid">
+
+      <article class="comp-card">
+        <span class="tier regional">Regional · Gateway</span>
+        <h3>County / Regional Science Fair</h3>
+        <p class="what">The intial competition to qualify for state and national fairs. In our area: the Contra Costa County Science and Engineering Fair, or Alameda County Science and Engineering Fair (HITACHI). Win here to qualify upward.</p>
+        <dl class="meta">
+          <dt>Eligibility</dt><dd>Grades 6–12 (varies by fair)</dd>
+          <dt>Path</dt><dd>Direct school or individual entry</dd>
+          <dt>Season</dt><dd>Early spring</dd>
+        </dl>
+        <div class="yookta">Yookta won the <b>Middle School Engineering Grand Award</b> at the 2025 Alameda County fair, then advanced to CSEF and JIC.</div>
+      </article>
+
+      <article class="comp-card">
+        <span class="tier state">State</span>
+        <h3>California Science and Engineering Fair (CSEF)</h3>
+        <p class="what">California's state-level science fair, drawing the strongest projects from county and regional fairs across the state for category-by-category judging.</p>
+        <dl class="meta">
+          <dt>Eligibility</dt><dd>Grades 6–12</dd>
+          <dt>Path</dt><dd>Top ~15 at county fair → CSEF</dd>
+          <dt>Season</dt><dd>April</dd>
+        </dl>
+        <div class="yookta">Yookta took the <b>2nd Place Category Award</b> at the 2025 California Science and Engineering Fair.</div>
+      </article>
+
+      <article class="comp-card">
+        <span class="tier natl">National · Middle School</span>
+        <h3>Thermo Fisher Scientific Junior Innovators Challenge (JIC)</h3>
+        <p class="what">The premier national STEM competition for 6th–8th graders. Top 30 finalists travel to Washington, D.C. for a week of team challenges and judged projects.</p>
+        <dl class="meta">
+          <dt>Eligibility</dt><dd>Grades 6–8</dd>
+          <dt>Path</dt><dd>Win top 10% in sponsoring affiliated fair → nominated to apply</dd>
+          <dt>Season</dt><dd>Application by Jun · Finals in Oct</dd>
+        </dl>
+        <div class="yookta">Yookta was a <b>Top 30 National Finalist</b> at the 2025 Thermo Fisher JIC and earned the TIES award with her team.</div>
+      </article>
+
+      <article class="comp-card">
+        <span class="tier intl">International</span>
+        <h3>Regeneron International Science and Engineering Fair (ISEF)</h3>
+        <p class="what">The world's largest pre-college STEM competition - roughly 1,800 finalists from 70+ countries gather each May with original research projects across 22 categories.</p>
+        <dl class="meta">
+          <dt>Eligibility</dt><dd>Grades 9–12</dd>
+          <dt>Path</dt><dd>Win a regional/affiliated fair → ISEF</dd>
+          <dt>Season</dt><dd>Regionals Feb–Mar · Finals in May</dd>
+        </dl>
+        <div class="yookta">Yookta won the <b>3rd Place Grand Award in Computational Biology &amp; Bioinformatics</b> at ISEF 2026 in Phoenix, AZ.</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== INSTRUCTOR (Yookta hero + research + honors) ============== -->
+<div class="tab-panel" data-tab="instructor">
+
+  <section class="hero" id="instructor">
+    <div class="container">
+      <div class="grid">
+        <div>
+          <span class="eyebrow">Researcher · Educator · High schooler</span>
+          <h1>A camp built around what works in research <em>taught by someone who's lived it</em><span style="visibility:hidden">.</span></h1>
+        </div>
+
+        <div class="hero-media">
+          <div class="photo main">
+            <img src="images/yookta-portrait.jpg" alt="Yookta Pandit">
+            <div class="label">Yookta Pandit · Dublin, CA</div>
+          </div>
+          <div class="stamp">ISEF<br>'26<br>★</div>
+        </div>
+      </div>
+
+      <p class="lede">
+        I'm <b>Yookta</b> - a student researcher at Quarry Lane School in Dublin, CA. Over the last two
+        years I've built machine-learning models that detect neurological conditions earlier, from
+        <b>dyslexia in MRI scans</b> to <b>seizures in real-time signals from wearables</b>. For the past year, I've
+        also <b>run the AI Explorers club at Quarry Lane</b>, teaching middle schoolers the fundamentals of
+        machine learning every week. This summer, I'm bringing that same approach to my
+        <a href="#home"><b>AI Foundations summer camp</b></a>.
+      </p>
+  <!--
+      <div class="hero-tags">
+        <span class="tag gold"><span class="ico">★</span>ISEF 2026 - 3rd Place Grand Award</span>
+        <span class="tag blue"><span class="ico">●</span>Thermo Fisher JIC Top 30 Finalist</span>
+        <span class="tag green"><span class="ico">●</span>CSEF - 2nd Place Category</span>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="research">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker">Research</div>
+        <h2>Two projects, two years, two <em>top-tier</em> results.</h2>
+      </div>
+
+      <article class="project">
+        <div class="copy">
+          <header>
+            <span class="pill">★ ISEF 2026 · Grand Award</span>
+            <span class="where">Phoenix, AZ · May 2026</span>
+          </header>
+          <h3>Predicting Seizures with Multimodal Wearables</h3>
+          <p class="summary">
+            Epilepsy affects nearly <b>50 million people</b> worldwide, yet seizure monitoring still depends on
+            in-hospital equipment - leaving patients unprotected during daily life. I used time- and frequency-domain
+             features from the SeizeIT2 dataset, containing EEG, ECG, and EMG data.
+            I then tested SVM, Random Forest, and XGBoost models to train on this data, and built a final real-time seizure
+            prediction pipeline with XGBoost that can run on a discreet 2-electrode wearable.
+          </p>
+          <div class="results">
+            <div class="result"><div class="v">86.6%</div><div class="l">Avg. sensitivity (patient-specific)</div></div>
+            <div class="result"><div class="v">0.22/hr</div><div class="l">False alarm rate</div></div>
+            <div class="result gold"><div class="v">3rd / world</div><div class="l">Comp. Biology &amp; Bioinformatics</div></div>
+          </div>
+        </div>
+
+        <div class="visual">
+          <div class="board">
+            <img src="images/board-isef.jpg" alt="ISEF 2026 project board: Predicting Seizures with Multimodal Wearables">
+            <div class="caption">Project Board · CBIO049 · Phoenix, AZ</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reverse">
+        <div class="copy">
+          <header>
+            <span class="pill green">● JIC 2025 · Top 30 Finalist</span>
+            <span class="where">Washington, D.C. · Oct 2025</span>
+          </header>
+          <h3>Reading the Brain: MRIs for Early Detection of Dyslexia</h3>
+          <p class="summary">
+            One in ten children in America struggle with dyslexia, and most don't get timely help because
+            diagnosis is hard. I used a public dataset of MRI scans - <b>40 children and adults with
+            dyslexia and 42 controls</b> - and divided each brain into 132 anatomical regions. From there I
+            trained a sequence of multi-layer perceptron classifiers that compared brain region sizes between the two groups.
+          </p>
+          <div class="results">
+            <div class="result"><div class="v">87.5%</div><div class="l">Final classification accuracy</div></div>
+            <div class="result"><div class="v">132</div><div class="l">Anatomical brain regions analyzed</div></div>
+            <div class="result gold"><div class="v">Top 30</div><div class="l">Out of 1,800+ applicants</div></div>
+          </div>
+        </div>
+
+        <div class="visual">
+          <div class="board">
+            <img src="images/board-jic.jpg" alt="JIC 2025 project board: Reading the Brain - MRIs for Early Detection of Dyslexia">
+            <div class="caption">Project Board · JIC 2025 · Washington, D.C.</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  -->
+  <section id="honors">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker">Honors &amp; Awards</div>
+        <h2>Recognized at the regional, national, and international level.</h2>
+      </div>
+      <div class="honors-grid">
+        <div class="honor">
+          <div class="badge">★</div>
+          <div>
+            <div class="name">3rd Place Grand Award - ISEF 2026</div>
+            <div class="meta">Regeneron International Science and Engineering Fair · Computational Biology &amp; Bioinformatics</div>
+          </div>
+          <div class="year">May '26</div>
+        </div>
+        <div class="honor">
+          <div class="badge silver">●</div>
+          <div>
+            <div class="name">ISEF 2026 Finalist</div>
+            <div class="meta">HITACHI Science and Engineering Fair, Alameda County</div>
+          </div>
+          <div class="year">Mar '26</div>
+        </div>
+        <div class="honor">
+          <div class="badge">★</div>
+          <div>
+            <div class="name">Thermo Fisher JIC Top 30 Finalist</div>
+            <div class="meta">Thermo Fisher Scientific Junior Innovators Challenge</div>
+          </div>
+          <div class="year">Oct '25</div>
+        </div>
+        <div class="honor">
+          <div class="badge bronze">●</div>
+          <div>
+            <div class="name">CSEF Category Award - 2nd Place</div>
+            <div class="meta">California Science and Engineering Fair</div>
+          </div>
+          <div class="year">Apr '25</div>
+        </div>
+        <div class="honor">
+          <div class="badge">★</div>
+          <div>
+            <div class="name">Middle School Engineering Grand Award</div>
+            <div class="meta">Alameda County Science and Engineering Fair</div>
+          </div>
+          <div class="year">Mar '25</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="container row">
+    <div>© 2026 AI Foundations Summer Camp · Instructor: Yookta Pandit</div>
+    <div>
+      <a href="https://isef.net/project/cbio049-predicting-seizures-with-multimodal-wearables">ISEF Project</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.societyforscience.org/jic/2025-student-finalists/yookta-pandit/">JIC Profile</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    const panels = document.querySelectorAll('.tab-panel');
+    const links  = document.querySelectorAll('nav a[data-tab-link]');
+    const valid  = new Set([...panels].map(p => p.dataset.tab));
+
+    function show(name){
+      if(!valid.has(name)) name = 'home';
+      panels.forEach(p => p.classList.toggle('active', p.dataset.tab === name));
+      links.forEach(l => l.classList.toggle('active', l.dataset.tabLink === name));
+      window.scrollTo({top: 0, behavior: 'instant'});
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = a.getAttribute('href').slice(1);
+        if(valid.has(target)){
+          e.preventDefault();
+          history.replaceState(null, '', '#' + target);
+          show(target);
+        }
+      });
+    });
+
+    window.addEventListener('hashchange', () => show((location.hash || '#home').slice(1)));
+    show((location.hash || '#home').slice(1));
+  })();
+</script>
+
+</body>
+</html>
